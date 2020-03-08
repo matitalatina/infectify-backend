@@ -1,10 +1,10 @@
 import { RegionDto } from '../models/region.interface';
 import { zonedTimeToUtc } from 'date-fns-tz';
-export function getValidRegionDto(): RegionDto {
+export function getValidRegionDto({ code = 13 }: { code?: number } = {}): RegionDto {
   return {
     date: zonedTimeToUtc('2020-03-06 17:00:00', 'Europe/Rome'),
     state: 'ITA',
-    code: 13,
+    code: code,
     name: 'Abruzzo',
     hospitalizedWithSymptomsCount: 9,
     intensiveCareCount: 0,

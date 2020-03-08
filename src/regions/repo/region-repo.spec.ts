@@ -8,6 +8,7 @@ import { Region } from '../models/region.interface';
 import { Model } from 'mongoose';
 import { MongooseConfig } from '../../config/mongoose-config';
 import { ConfigModule as NestConfigModule } from '@nestjs/config';
+import { cloneDeep } from 'lodash';
 
 describe('RegionRepo', () => {
   let provider: RegionRepo;
@@ -37,9 +38,19 @@ describe('RegionRepo', () => {
 
   it('should save, update and retrieve region', async () => {
     const regionDto = getValidRegionDto();
-    await provider.upsert(regionDto);
-    await provider.upsert(regionDto);
+    // If I don't create a new object, mongoose sets its properties on it
+    await provider.upsert(cloneDeep(regionDto));
+    await provider.upsert(cloneDeep(regionDto));
     expect(await provider.findAll()).toEqual([regionDto]);
+  });
+
+  it('should bulkUpsert', async () => {
+    const regionDto1 = getValidRegionDto();
+    const regionDto2 = getValidRegionDto({ code: 3 });
+    // If I don't create a new object, mongoose sets its properties on it
+    await provider.upsertBulk([cloneDeep(regionDto1), cloneDeep(regionDto2)]);
+    const savedRegions = await provider.findAll();
+    expect(savedRegions).toEqual([regionDto1, regionDto2]);
   });
 });
 
