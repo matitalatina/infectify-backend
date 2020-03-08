@@ -1,4 +1,4 @@
-import { RegionDto } from './../models/region.interface';
+import { RegionDto } from '../models/region.interface';
 import { Injectable } from '@nestjs/common';
 import { REGION_INJECT } from '../models/region.schema';
 import { Model } from 'mongoose';
@@ -18,7 +18,7 @@ export class RegionRepo {
   ) { }
 
   async upsert(region: RegionDto): Promise<RegionDto> {
-    return this.regionModel.update({ code: region.code }, region, { upsert: true }).exec();
+    return this.regionModel.updateOne({ code: region.code }, region, { upsert: true }).exec();
   }
 
   async upsertBulk(regions: RegionDto[]): Promise<void> {

@@ -1,4 +1,4 @@
-import { ConfigModule } from './../../config/config.module';
+import { ConfigModule } from '../../config/config.module';
 import { Test, TestingModule } from '@nestjs/testing';
 import { RegionRepo } from './region-repo';
 import { MongooseModule, getModelToken } from '@nestjs/mongoose';
@@ -12,9 +12,10 @@ import { cloneDeep } from 'lodash';
 
 describe('RegionRepo', () => {
   let provider: RegionRepo;
+  let module: TestingModule;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    module = await Test.createTestingModule({
       imports: [
         NestConfigModule.forRoot(),
         ConfigModule,
@@ -30,6 +31,10 @@ describe('RegionRepo', () => {
     const regionModel = module.get<Model<Region>>(getModelToken(REGION_INJECT));
     await regionModel.deleteMany({}).exec();
     provider = module.get<RegionRepo>(RegionRepo);
+  });
+
+  afterEach(async () => {
+    module.close();
   });
 
   it('should be defined', () => {

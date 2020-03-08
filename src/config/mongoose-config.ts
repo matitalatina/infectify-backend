@@ -10,6 +10,9 @@ export class MongooseConfig implements MongooseOptionsFactory {
   createMongooseOptions(): MongooseModuleOptions {
     return {
       uri: this.mongoDbConfig.uri,
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+      useCreateIndex: true,
     };
   }
 }
