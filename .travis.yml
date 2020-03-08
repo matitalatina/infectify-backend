@@ -1,0 +1,29 @@
+language: node_js
+node_js: "12"
+services:
+  - mongodb
+jobs:
+  include:
+    - stage: test
+      script:
+        - npm run test
+      env:
+        - MONGODB_URI=mongodb://localhost:27017/infectify_test
+    - stage: deploy
+      name: Deploy on Heroku
+      before_deploy:
+        - npm run build
+      deploy:
+        provider: heroku
+        api_key:
+          secure: H7BstcQxEXWBMZXjg17/5eIe67XA8RE2qFLdeRFB1RhPKaU4xHnrJuC/fGFEEPUred8Ida+lG8JVabSasZxIOFGFgcTBKLy1ajYwwPBs1yZO3nh9mbaoOSrz2aWPwqj8wquO8VwEyffsENs+Qi/G3heGtEOrXhq8kb/11Y4Vc8s1YIlSNl3yIaSyuDS35eKHNH2IKT/Hqu8s1KRDh+6Hj7uwWltE5mXU1L0B+adDVH1Qr+V5Ns23XGTS7KEbnsK2cZH1FKtVMj5E+k+a5pNTG4/WZYSopnbaX2XdBI3iMwAIR10LheU4OyzKKRv+rGLhouORJy/xXFWDY3DZNYCcu4DS5Y0TM+mkHtZQ6SXMnHc966iRBQ3/MxcUd4xH7ntkZMDYTyXhGvwlTtpF2TlhzAa3d5Qpk+EjPFZmNO3YQTi5D7t2vD2CMyohvBVLsn1+fuyqfmPw+z7UmFd6U03doyy0RvBygiH359tjgXS6s0cJxJu0QK0Wm0X+QkXQ/s2XL4qI9QcBqwrCxS9fintT23GHTW9Rez36DI2NA+U/jZJVG2Svi6kqqGLVqrYdyi/58MlGJbXSJmUcdz7ZNOiaEfW5o9foL91IU9RfX9kODTu1UwvMFQYNmajGOKl29tb2qlYDnem4k86s+07hc5Tq7Gj+zPmH1VIlV2sxsz/qdAY=
+        app: infectify-backend
+        on:
+          repo: matitalatina/infectify-backend
+          branch: master
+        env:
+          - NODE_ENV=production
+        skip_cleanup: true
+cache:
+  directories:
+    - node_modules
