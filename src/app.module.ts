@@ -1,12 +1,12 @@
-import { MongoDbConfig } from './config/mongo-db.config';
 import { Module } from '@nestjs/common';
+import { ConfigModule as NestConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { RegionsModule } from './regions/regions.module';
 import { DpcClient } from './client/dpc-client';
-import { ConfigModule as NestConfigModule } from '@nestjs/config';
 import { ConfigModule } from './config/config.module';
-import { MongooseModule } from '@nestjs/mongoose';
+import { MongooseConfig } from './config/mongoose-config';
+import { RegionsModule } from './regions/regions.module';
 
 @Module({
   imports: [
@@ -14,10 +14,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     NestConfigModule.forRoot(),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (mongoDbConfig: MongoDbConfig) => ({
-        uri: mongoDbConfig.uri,
-      }),
-      inject: [MongoDbConfig],
+      useExisting: MongooseConfig,
     }),
     ConfigModule,
   ],

@@ -10,4 +10,5 @@ export class MongoDbConfig {
   get uri(): string {
     return this.configService.get('MONGODB_URI');
   }
+
 }

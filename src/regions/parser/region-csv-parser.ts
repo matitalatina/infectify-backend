@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Injectable } from '@nestjs/common';
-import { Region } from '../models/region.interface';
+import { RegionDto } from '../models/region.interface';
 import parse from 'csv-parse/lib/sync';
 import { zonedTimeToUtc } from 'date-fns-tz';
 
 @Injectable()
 export class RegionCsvParser {
-  parse(csvRaw: string): Region[] {
+  parse(csvRaw: string): RegionDto[] {
     return parse(csvRaw, {
       columns: true,
       skip_empty_lines: true,

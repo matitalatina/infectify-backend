@@ -1,9 +1,11 @@
-export type GeoPoint = {
+import { Document } from 'mongoose';
+
+export interface GeoPoint {
   type: 'Point',
   coordinates: number[],
 }
 
-export interface Region {
+export interface RegionDto {
   date: Date;
   state: string;
   code: number;
@@ -19,4 +21,8 @@ export interface Region {
   caseCount: number;
   testCount: number;
   location: GeoPoint;
+}
+
+export interface Region extends RegionDto, Document {
+
 }

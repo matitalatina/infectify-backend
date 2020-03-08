@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { RegionCsvParser } from './region-csv-parser';
 import { promises as fs } from "fs";
 import { zonedTimeToUtc } from 'date-fns-tz';
-import { Region } from '../models/region.interface';
+import { RegionDto } from '../models/region.interface';
 import path from 'path';
 
 describe('RegionCsvParser', () => {
@@ -23,7 +23,7 @@ describe('RegionCsvParser', () => {
   it('should parse it', async () => {
     const csvRaw: string = (await fs.readFile(path.resolve(__dirname, '../../../test/resources/dpc-covid19-ita-regioni-20200306.csv'))).toString();
 
-    const expectedRegions: Region[] = [
+    const expectedRegions: RegionDto[] = [
       {
         date: zonedTimeToUtc('2020-03-06 17:00:00', 'Europe/Rome'),
         state: 'ITA',

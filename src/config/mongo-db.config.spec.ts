@@ -30,5 +30,5 @@ describe('MongoDbConfig', () => {
     const uri = 'mongodb://localhost:27017/db';
     when(configService.get<string>('MONGODB_URI')).thenReturn(uri);
     expect(provider.uri).toEqual(uri)
-  })
+  });
 });
