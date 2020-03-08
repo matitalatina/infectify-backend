@@ -11,6 +11,7 @@ jobs:
         - MONGODB_URI=mongodb://localhost:27017/infectify_test
     - stage: deploy
       name: Deploy on Heroku
+      script: echo "Deploying to heroku..."
       before_deploy:
         - npm run build
       deploy:
