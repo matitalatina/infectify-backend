@@ -16,6 +16,20 @@
       "internalConsoleOptions": "neverOpen",
       "disableOptimisticBPs": true,
       "program": "${workspaceFolder}/node_modules/jest/bin/jest"
+    },
+    {
+      "type": "node",
+      "name": "vscode-jest-tests-file",
+      "request": "launch",
+      "args": [
+        "--runInBand",
+        "${file}"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "disableOptimisticBPs": true,
+      "program": "${workspaceFolder}/node_modules/jest/bin/jest"
     }
   ]
 }
