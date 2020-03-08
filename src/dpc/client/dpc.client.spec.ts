@@ -1,7 +1,7 @@
 import { HttpModule, HttpService } from '@nestjs/common/http';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AxiosResponse } from 'axios';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 import { RegionCsvParser } from '../parser/region-csv-parser';
 import { getValidRegionDto } from '../repo/repo.fixture';
@@ -53,14 +53,17 @@ describe('DpcClient', () => {
   });
 
   it('should handle not found file', async () => {
-    const axiosResponse: AxiosResponse = {
-      data: null,
-      status: 404,
-      statusText: '',
-      headers: {},
-      config: {},
+    const error = {
+      isAxiosError: true,
+      response: {
+        data: null,
+        status: 404,
+        statusText: '',
+        headers: {},
+        config: {},
+      },
     };
-    const httpSpy = jest.spyOn(http, 'get').mockReturnValue(of(axiosResponse));
+    const httpSpy = jest.spyOn(http, 'get').mockReturnValue(throwError(error));
     expect(await provider.fetchRegionsCsvRaw(new Date('2020-03-06T21:00:35.317Z'))).toEqual(null);
     expect(httpSpy).toHaveBeenCalledWith('https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-regioni/dpc-covid19-ita-regioni-20200306.csv')
   });
