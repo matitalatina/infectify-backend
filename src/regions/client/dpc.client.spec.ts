@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DpcClient } from './dpc-client';
+import { RegionClient } from './dpc.client';
 import { HttpService, HttpModule } from '@nestjs/common/http';
 import { mock, instance, verify, when, reset } from 'ts-mockito';
 import { of } from 'rxjs';
 import { AxiosResponse } from 'axios';
 
 describe('DpcClient', () => {
-  let provider: DpcClient;
+  let provider: RegionClient;
   let http: HttpService;
 
   beforeEach(async () => {
@@ -15,12 +15,12 @@ describe('DpcClient', () => {
         HttpModule,
       ],
       providers: [
-        DpcClient,
+        RegionClient,
       ],
     })
       .compile();
 
-    provider = module.get<DpcClient>(DpcClient);
+    provider = module.get<RegionClient>(RegionClient);
     http = module.get<HttpService>(HttpService);
   });
 

@@ -1,9 +1,9 @@
+import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/common/http';
-import { Injectable, Inject } from '@nestjs/common';
 import { format } from 'date-fns';
 
 @Injectable()
-export class DpcClient {
+export class RegionClient {
   constructor(
     private readonly http: HttpService,
   ) { }
