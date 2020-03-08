@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RegionService } from './region.service';
+import { startOfDay, subDays } from 'date-fns';
+import { deepEqual, instance, mock, verify, when } from 'ts-mockito';
 import { DpcClient } from '../client/dpc.client';
-import { mock, instance, when } from 'ts-mockito';
 import { RegionRepo } from '../repo/region-repo';
-import { startOfDay, addDays, subDays } from 'date-fns';
 import { getValidRegionDto } from '../repo/repo.fixture';
+import { RegionService } from './region.service';
 
 describe('RegionService', () => {
   let provider: RegionService;
@@ -39,9 +39,18 @@ describe('RegionService', () => {
     const today = startOfDay(new Date());
     const yesterday = startOfDay(subDays(new Date(), 1));
     const regionDtos = [getValidRegionDto()];
-    when(dpcClient.fetchRegionsCsvRaw(today)).thenResolve(null);
-    when(dpcClient.fetchRegionsCsvRaw(yesterday)).thenResolve(regionDtos);
+    when(dpcClient.fetchRegionsCsvRaw(deepEqual(today))).thenResolve(null);
+    when(dpcClient.fetchRegionsCsvRaw(deepEqual(yesterday))).thenResolve(regionDtos);
 
-    // await provider.syncLatestRegions();
+    await provider.syncLatestRegions();
+
+    verify(regionRepo.upsertBulk(regionDtos)).called();
   });
+
+  it('should get all', async () => {
+    const regionDtos = [getValidRegionDto()];
+    when(regionRepo.findAll()).thenResolve(regionDtos);
+
+    expect(await provider.getAll()).toEqual(regionDtos);
+  })
 });
