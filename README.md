@@ -1,3 +1,5 @@
+![Infectify](https://github.com/matitalatina/infectify-app/raw/master/assets/icons/first-page-play-store-it.png)
+
 # Infectify backend
 
 It provides data about Coronavirus in Italy. The source is [Protezione Civile](https://github.com/pcm-dpc/COVID-19).
