@@ -24,7 +24,7 @@
     "@nestjs/config": "^0.2.4",
     "@nestjs/core": "^6.10.14",
     "@nestjs/mongoose": "^6.3.1",
-    "@nestjs/platform-express": "^6.10.14",
+    "@nestjs/platform-express": "^9.2.1",
     "csv-parse": "^4.8.8",
     "date-fns": "^2.10.0",
     "date-fns-tz": "^1.0.10",
